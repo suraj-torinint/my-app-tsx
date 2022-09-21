@@ -1,24 +1,22 @@
 import React, { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
-import { actionCreators } from "../State/Stores";
+import { actionType } from "../State/reducers/amountReducer";
 
 const CartItems = () => {
     let QUANTITY = 1;
     const [quantity, setQuantity] = useState(QUANTITY);
     const dispatch = useDispatch();
-    const { depositMoney, withdrawMoney } = bindActionCreators(actionCreators, dispatch);
 
     const handleIncrement: React.MouseEventHandler = () => {
         setQuantity((prevQuantity) => prevQuantity + 1);
         // props.setIncrementQuantity(quantity, Number(props.price));
-        depositMoney(100)
+        dispatch<actionType>({ type: "deposit", payload:100 });
     };
 
     const handleDecrement: React.MouseEventHandler = () => {
         setQuantity((prevQuantity) => (prevQuantity !== 0 && prevQuantity > 1 ? prevQuantity - 1 : prevQuantity));
         // props.setDecermentQuantity(quantity, Number(props.price));
-        withdrawMoney(100)
+        dispatch<actionType>({ type: "withdraw", payload: 100 });
     };
 
     const handleRemoveEvent: React.MouseEventHandler = () => {
